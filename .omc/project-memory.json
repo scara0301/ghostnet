@@ -1,0 +1,173 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1780676700828,
+  "projectRoot": "C:\\projs\\ghost\\ghostnet",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [
+    {
+      "path": "backend\\main.py",
+      "accessCount": 8,
+      "lastAccessed": 1780750297782,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 7,
+      "lastAccessed": 1780678162240,
+      "type": "directory"
+    },
+    {
+      "path": "backend\\modules\\dns_module.py",
+      "accessCount": 6,
+      "lastAccessed": 1780750285448,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\otx_module.py",
+      "accessCount": 6,
+      "lastAccessed": 1780750293381,
+      "type": "file"
+    },
+    {
+      "path": "backend\\agent\\orchestrator.py",
+      "accessCount": 5,
+      "lastAccessed": 1780750272640,
+      "type": "file"
+    },
+    {
+      "path": "backend\\agent\\risk_engine.py",
+      "accessCount": 5,
+      "lastAccessed": 1780750276863,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\whois_module.py",
+      "accessCount": 5,
+      "lastAccessed": 1780750278962,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\crt_module.py",
+      "accessCount": 5,
+      "lastAccessed": 1780750287121,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\geo_module.py",
+      "accessCount": 4,
+      "lastAccessed": 1780750288910,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\rep_module.py",
+      "accessCount": 4,
+      "lastAccessed": 1780750295962,
+      "type": "file"
+    },
+    {
+      "path": "main.py",
+      "accessCount": 3,
+      "lastAccessed": 1780678167697,
+      "type": "file"
+    },
+    {
+      "path": "requirements.txt",
+      "accessCount": 3,
+      "lastAccessed": 1780678167762,
+      "type": "file"
+    },
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 3,
+      "lastAccessed": 1780678168172,
+      "type": "file"
+    },
+    {
+      "path": "backend\\models\\schemas.py",
+      "accessCount": 3,
+      "lastAccessed": 1780749307622,
+      "type": "file"
+    },
+    {
+      "path": "backend\\requirements.txt",
+      "accessCount": 2,
+      "lastAccessed": 1780678400478,
+      "type": "file"
+    },
+    {
+      "path": "frontend\\app.js",
+      "accessCount": 2,
+      "lastAccessed": 1780748888866,
+      "type": "file"
+    },
+    {
+      "path": "test_ws.py",
+      "accessCount": 2,
+      "lastAccessed": 1780750344621,
+      "type": "file"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 1,
+      "lastAccessed": 1780678376506,
+      "type": "file"
+    },
+    {
+      "path": "backend\\models\\__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1780678405647,
+      "type": "file"
+    },
+    {
+      "path": "backend\\agent\\__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1780678406851,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1780678409873,
+      "type": "file"
+    },
+    {
+      "path": "frontend\\style.css",
+      "accessCount": 1,
+      "lastAccessed": 1780686196113,
+      "type": "file"
+    },
+    {
+      "path": "frontend\\index.html",
+      "accessCount": 1,
+      "lastAccessed": 1780743694710,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

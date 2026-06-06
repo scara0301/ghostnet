@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GHOSTNET</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">GHOSTNET<span>OSINT Intelligence Platform</span></div>
+      </div>
+
+      <div class="scan-form">
+        <label for="target-input">Target</label>
+        <input id="target-input" type="text" placeholder="example.com / 1.1.1.1" autocomplete="off" spellcheck="false" />
+
+        <label for="target-type">Type</label>
+        <select id="target-type">
+          <option value="domain">Domain</option>
+          <option value="ip">IP Address</option>
+          <option value="email">Email</option>
+        </select>
+
+        <button class="btn-scan" id="btn-scan">
+          <i class="ti ti-radar"></i> Run Scan
+        </button>
+      </div>
+
+      <div class="modules-section">
+        <h3>Modules</h3>
+        <div class="module-item" id="mod-whois">
+          <span class="module-dot"></span>
+          <span class="module-label">whois</span>
+          <span class="module-count" id="cnt-whois">—</span>
+        </div>
+        <div class="module-item" id="mod-dns">
+          <span class="module-dot"></span>
+          <span class="module-label">dns</span>
+          <span class="module-count" id="cnt-dns">—</span>
+        </div>
+        <div class="module-item" id="mod-crt">
+          <span class="module-dot"></span>
+          <span class="module-label">crt.sh</span>
+          <span class="module-count" id="cnt-crt">—</span>
+        </div>
+        <div class="module-item" id="mod-geo">
+          <span class="module-dot"></span>
+          <span class="module-label">geo</span>
+          <span class="module-count" id="cnt-geo">—</span>
+        </div>
+        <div class="module-item" id="mod-otx">
+          <span class="module-dot"></span>
+          <span class="module-label">otx</span>
+          <span class="module-count" id="cnt-otx">—</span>
+        </div>
+        <div class="module-item" id="mod-rep">
+          <span class="module-dot"></span>
+          <span class="module-label">rep</span>
+          <span class="module-count" id="cnt-rep">—</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main panel -->
+    <main class="main-panel">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="td-red"></span>
+          <span class="td-yellow"></span>
+          <span class="td-green"></span>
+        </div>
+        <span id="terminal-title">ghostnet — ready</span>
+      </div>
+
+      <div class="terminal-log" id="terminal-log">
+        <div class="empty-state" id="empty-state">
+          <div class="ghost">◈</div>
+          <p>Enter a target and run scan</p>
+        </div>
+      </div>
+
+      <div class="report-panel" id="report-panel">
+        <div class="report-header">
+          <h2 id="report-title">Recon Report</h2>
+          <span class="risk-badge" id="risk-badge">—</span>
+          <span class="report-meta" id="report-meta"></span>
+        </div>
+        <div id="findings-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

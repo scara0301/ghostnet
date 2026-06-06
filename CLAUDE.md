@@ -151,6 +151,28 @@ uvicorn main:app --reload --port 8000
 
 ---
 
+## Running Tests
+
+The suite is fully offline — modules are exercised through `httpx.MockTransport`,
+the orchestrator via stubbed modules, and the WebSocket endpoint via FastAPI's
+`TestClient`. No network calls, no live API keys.
+
+```bash
+cd ghostnet
+pip install -r backend/requirements-dev.txt
+# PYTHONPATH must include the repo root so `backend` is importable
+PYTHONPATH=. pytest            # Linux/macOS
+$env:PYTHONPATH="."; pytest    # Windows PowerShell
+```
+
+Layout (`backend/tests/`):
+- `conftest.py` — `make_client` fixture (mock-transport AsyncClient factory)
+- `test_schemas.py` — Pydantic boundary contract
+- `test_risk_engine.py` — scoring ladder + report aggregation robustness
+- `test_orchestrator.py` — pipeline routing, event streaming, failure isolation
+- `test_modules.py` — every module's parsing/findings + interface contract
+- `test_api.py` — `/health` and `/ws/recon` framing
+
 ## Testing Targets (Safe & Legal)
 
 | Target | Type | Why |

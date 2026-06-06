@@ -31,15 +31,15 @@
   "directoryMap": {},
   "hotPaths": [
     {
-      "path": "backend\\main.py",
-      "accessCount": 8,
-      "lastAccessed": 1780750297782,
+      "path": "backend\\modules\\dns_module.py",
+      "accessCount": 9,
+      "lastAccessed": 1780751236903,
       "type": "file"
     },
     {
-      "path": "backend\\modules\\dns_module.py",
-      "accessCount": 8,
-      "lastAccessed": 1780750963440,
+      "path": "backend\\main.py",
+      "accessCount": 9,
+      "lastAccessed": 1780751244620,
       "type": "file"
     },
     {
@@ -49,51 +49,63 @@
       "type": "directory"
     },
     {
-      "path": "backend\\modules\\otx_module.py",
-      "accessCount": 6,
-      "lastAccessed": 1780750293381,
-      "type": "file"
-    },
-    {
       "path": "backend\\agent\\orchestrator.py",
-      "accessCount": 6,
-      "lastAccessed": 1780750928418,
+      "accessCount": 7,
+      "lastAccessed": 1780751235813,
       "type": "file"
     },
     {
       "path": "backend\\modules\\whois_module.py",
-      "accessCount": 6,
-      "lastAccessed": 1780750943116,
+      "accessCount": 7,
+      "lastAccessed": 1780751241425,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\otx_module.py",
+      "accessCount": 7,
+      "lastAccessed": 1780751243782,
       "type": "file"
     },
     {
       "path": "backend\\agent\\risk_engine.py",
-      "accessCount": 5,
-      "lastAccessed": 1780750276863,
+      "accessCount": 6,
+      "lastAccessed": 1780751235356,
       "type": "file"
     },
     {
       "path": "backend\\modules\\crt_module.py",
-      "accessCount": 5,
-      "lastAccessed": 1780750287121,
+      "accessCount": 6,
+      "lastAccessed": 1780751241889,
       "type": "file"
     },
     {
       "path": "backend\\modules\\geo_module.py",
-      "accessCount": 4,
-      "lastAccessed": 1780750288910,
+      "accessCount": 5,
+      "lastAccessed": 1780751242392,
       "type": "file"
     },
     {
       "path": "backend\\modules\\rep_module.py",
-      "accessCount": 4,
-      "lastAccessed": 1780750295962,
+      "accessCount": 5,
+      "lastAccessed": 1780751242818,
       "type": "file"
     },
     {
       "path": "frontend\\app.js",
       "accessCount": 4,
       "lastAccessed": 1780750971164,
+      "type": "file"
+    },
+    {
+      "path": "backend\\models\\schemas.py",
+      "accessCount": 4,
+      "lastAccessed": 1780751236313,
+      "type": "file"
+    },
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 4,
+      "lastAccessed": 1780766300097,
       "type": "file"
     },
     {
@@ -109,21 +121,15 @@
       "type": "file"
     },
     {
-      "path": "CLAUDE.md",
-      "accessCount": 3,
-      "lastAccessed": 1780678168172,
-      "type": "file"
-    },
-    {
-      "path": "backend\\models\\schemas.py",
-      "accessCount": 3,
-      "lastAccessed": 1780749307622,
-      "type": "file"
-    },
-    {
       "path": "frontend\\index.html",
       "accessCount": 3,
       "lastAccessed": 1780750974449,
+      "type": "file"
+    },
+    {
+      "path": "pytest.ini",
+      "accessCount": 3,
+      "lastAccessed": 1780766369993,
       "type": "file"
     },
     {
@@ -136,6 +142,18 @@
       "path": "test_ws.py",
       "accessCount": 2,
       "lastAccessed": 1780750344621,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\email_module.py",
+      "accessCount": 2,
+      "lastAccessed": 1780751244470,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_modules.py",
+      "accessCount": 2,
+      "lastAccessed": 1780766245438,
       "type": "file"
     },
     {
@@ -169,15 +187,51 @@
       "type": "file"
     },
     {
-      "path": "backend\\modules\\email_module.py",
-      "accessCount": 1,
-      "lastAccessed": 1780750915991,
-      "type": "file"
-    },
-    {
       "path": "test_email.py",
       "accessCount": 1,
       "lastAccessed": 1780750997417,
+      "type": "file"
+    },
+    {
+      "path": "backend\\requirements-dev.txt",
+      "accessCount": 1,
+      "lastAccessed": 1780751589224,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1780751592925,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\conftest.py",
+      "accessCount": 1,
+      "lastAccessed": 1780751594871,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_schemas.py",
+      "accessCount": 1,
+      "lastAccessed": 1780751615003,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_risk_engine.py",
+      "accessCount": 1,
+      "lastAccessed": 1780751624961,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_orchestrator.py",
+      "accessCount": 1,
+      "lastAccessed": 1780753239213,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_api.py",
+      "accessCount": 1,
+      "lastAccessed": 1780766126710,
       "type": "file"
     }
   ],

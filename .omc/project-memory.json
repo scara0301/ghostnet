@@ -37,16 +37,16 @@
       "type": "file"
     },
     {
+      "path": "backend\\modules\\dns_module.py",
+      "accessCount": 8,
+      "lastAccessed": 1780750963440,
+      "type": "file"
+    },
+    {
       "path": "",
       "accessCount": 7,
       "lastAccessed": 1780678162240,
       "type": "directory"
-    },
-    {
-      "path": "backend\\modules\\dns_module.py",
-      "accessCount": 6,
-      "lastAccessed": 1780750285448,
-      "type": "file"
     },
     {
       "path": "backend\\modules\\otx_module.py",
@@ -56,20 +56,20 @@
     },
     {
       "path": "backend\\agent\\orchestrator.py",
-      "accessCount": 5,
-      "lastAccessed": 1780750272640,
+      "accessCount": 6,
+      "lastAccessed": 1780750928418,
+      "type": "file"
+    },
+    {
+      "path": "backend\\modules\\whois_module.py",
+      "accessCount": 6,
+      "lastAccessed": 1780750943116,
       "type": "file"
     },
     {
       "path": "backend\\agent\\risk_engine.py",
       "accessCount": 5,
       "lastAccessed": 1780750276863,
-      "type": "file"
-    },
-    {
-      "path": "backend\\modules\\whois_module.py",
-      "accessCount": 5,
-      "lastAccessed": 1780750278962,
       "type": "file"
     },
     {
@@ -88,6 +88,12 @@
       "path": "backend\\modules\\rep_module.py",
       "accessCount": 4,
       "lastAccessed": 1780750295962,
+      "type": "file"
+    },
+    {
+      "path": "frontend\\app.js",
+      "accessCount": 4,
+      "lastAccessed": 1780750971164,
       "type": "file"
     },
     {
@@ -115,15 +121,15 @@
       "type": "file"
     },
     {
-      "path": "backend\\requirements.txt",
-      "accessCount": 2,
-      "lastAccessed": 1780678400478,
+      "path": "frontend\\index.html",
+      "accessCount": 3,
+      "lastAccessed": 1780750974449,
       "type": "file"
     },
     {
-      "path": "frontend\\app.js",
+      "path": "backend\\requirements.txt",
       "accessCount": 2,
-      "lastAccessed": 1780748888866,
+      "lastAccessed": 1780678400478,
       "type": "file"
     },
     {
@@ -163,9 +169,15 @@
       "type": "file"
     },
     {
-      "path": "frontend\\index.html",
+      "path": "backend\\modules\\email_module.py",
       "accessCount": 1,
-      "lastAccessed": 1780743694710,
+      "lastAccessed": 1780750915991,
+      "type": "file"
+    },
+    {
+      "path": "test_email.py",
+      "accessCount": 1,
+      "lastAccessed": 1780750997417,
       "type": "file"
     }
   ],

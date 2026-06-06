@@ -11,12 +11,12 @@ from backend.models.schemas import ReconReport, WSEvent
 PIPELINE: dict[str, list[str]] = {
     "domain": ["whois", "dns", "crt", "geo", "otx", "rep"],
     "ip": ["geo", "otx", "rep"],
-    "email": ["whois", "dns"],
+    "email": ["email", "whois", "dns"],
 }
 
 _MODULE_MAP = {
     name: f"backend.modules.{name}_module"
-    for name in ("whois", "dns", "crt", "geo", "otx", "rep")
+    for name in ("email", "whois", "dns", "crt", "geo", "otx", "rep")
 }
 
 

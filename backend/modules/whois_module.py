@@ -9,8 +9,11 @@ async def run(target: str, client: httpx.AsyncClient) -> dict:
     findings: list[dict] = []
     data: dict = {}
 
+    # Accept an email target by operating on its domain part.
+    domain = target.split("@")[-1] if "@" in target else target
+
     try:
-        r = await client.get(f"https://rdap.org/domain/{target}")
+        r = await client.get(f"https://rdap.org/domain/{domain}")
         r.raise_for_status()
         rdap = r.json()
 

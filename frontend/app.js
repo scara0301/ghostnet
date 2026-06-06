@@ -18,7 +18,7 @@
 
   // ── Module state ──────────────────────────────────────────────────────────
 
-  const MODULE_NAMES = ['whois', 'dns', 'crt', 'geo', 'otx', 'rep'];
+  const MODULE_NAMES = ['email', 'whois', 'dns', 'crt', 'geo', 'otx', 'rep'];
 
   function resetModules() {
     MODULE_NAMES.forEach(name => {

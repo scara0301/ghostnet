@@ -19,9 +19,12 @@ async def run(target: str, client: httpx.AsyncClient) -> dict:
     findings: list[dict] = []
     data: dict = {}
 
+    # Accept an email target by operating on its domain part.
+    domain = target.split("@")[-1] if "@" in target else target
+
     try:
         for rtype in RECORD_TYPES:
-            records = await _query(client, target, rtype)
+            records = await _query(client, domain, rtype)
             data[rtype] = [rec.get("data", "") for rec in records]
 
         txt_records = " ".join(data.get("TXT", []))
@@ -40,13 +43,13 @@ async def run(target: str, client: httpx.AsyncClient) -> dict:
                 "detail": "No SPF TXT record found — domain vulnerable to email spoofing",
             })
 
-        dmarc = await _query(client, f"_dmarc.{target}", "TXT")
+        dmarc = await _query(client, f"_dmarc.{domain}", "TXT")
         data["DMARC"] = [rec.get("data", "") for rec in dmarc]
         if not dmarc:
             findings.append({
                 "severity": "MEDIUM",
                 "title": "Missing DMARC record",
-                "detail": "No DMARC policy found at _dmarc." + target,
+                "detail": "No DMARC policy found at _dmarc." + domain,
             })
 
     except (httpx.HTTPError, ValueError, Exception) as exc:

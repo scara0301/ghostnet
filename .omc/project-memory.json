@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1780676700828,
+  "lastScanned": 1781279657655,
   "projectRoot": "C:\\projs\\ghost\\ghostnet",
   "techStack": {
     "languages": [],
@@ -25,219 +25,240 @@
     "isMonorepo": false,
     "workspaces": [],
     "mainDirectories": [],
-    "gitBranches": null
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
   },
   "customNotes": [],
-  "directoryMap": {},
+  "directoryMap": {
+    "backend": {
+      "path": "backend",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1781279657626,
+      "keyFiles": [
+        "main.py",
+        "requirements-dev.txt",
+        "requirements.txt"
+      ]
+    },
+    "frontend": {
+      "path": "frontend",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1781279657627,
+      "keyFiles": [
+        "app.js",
+        "index.html",
+        "style.css"
+      ]
+    },
+    "reports": {
+      "path": "reports",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1781279657627,
+      "keyFiles": []
+    },
+    "venv": {
+      "path": "venv",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1781279657628,
+      "keyFiles": [
+        "pyvenv.cfg"
+      ]
+    },
+    "backend\\models": {
+      "path": "backend\\models",
+      "purpose": "Data models",
+      "fileCount": 2,
+      "lastAccessed": 1781279657630,
+      "keyFiles": [
+        "schemas.py",
+        "__init__.py"
+      ]
+    },
+    "backend\\tests": {
+      "path": "backend\\tests",
+      "purpose": "Test files",
+      "fileCount": 7,
+      "lastAccessed": 1781279657630,
+      "keyFiles": [
+        "conftest.py",
+        "test_api.py",
+        "test_modules.py"
+      ]
+    },
+    "venv\\Lib": {
+      "path": "venv\\Lib",
+      "purpose": "Library code",
+      "fileCount": 0,
+      "lastAccessed": 1781279657632,
+      "keyFiles": []
+    },
+    "venv\\Scripts": {
+      "path": "venv\\Scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 20,
+      "lastAccessed": 1781279657634,
+      "keyFiles": [
+        "activate",
+        "activate.bat",
+        "activate.fish"
+      ]
+    }
+  },
   "hotPaths": [
     {
-      "path": "backend\\modules\\dns_module.py",
-      "accessCount": 9,
-      "lastAccessed": 1780751236903,
-      "type": "file"
-    },
-    {
       "path": "backend\\main.py",
-      "accessCount": 9,
-      "lastAccessed": 1780751244620,
+      "accessCount": 3,
+      "lastAccessed": 1781289517117,
       "type": "file"
     },
     {
-      "path": "",
-      "accessCount": 7,
-      "lastAccessed": 1780678162240,
-      "type": "directory"
+      "path": "backend\\intel\\bayes.py",
+      "accessCount": 2,
+      "lastAccessed": 1781283019003,
+      "type": "file"
+    },
+    {
+      "path": "backend\\intel\\evolution.py",
+      "accessCount": 2,
+      "lastAccessed": 1781283026722,
+      "type": "file"
     },
     {
       "path": "backend\\agent\\orchestrator.py",
-      "accessCount": 7,
-      "lastAccessed": 1780751235813,
-      "type": "file"
-    },
-    {
-      "path": "backend\\modules\\whois_module.py",
-      "accessCount": 7,
-      "lastAccessed": 1780751241425,
-      "type": "file"
-    },
-    {
-      "path": "backend\\modules\\otx_module.py",
-      "accessCount": 7,
-      "lastAccessed": 1780751243782,
-      "type": "file"
-    },
-    {
-      "path": "backend\\agent\\risk_engine.py",
-      "accessCount": 6,
-      "lastAccessed": 1780751235356,
-      "type": "file"
-    },
-    {
-      "path": "backend\\modules\\crt_module.py",
-      "accessCount": 6,
-      "lastAccessed": 1780751241889,
-      "type": "file"
-    },
-    {
-      "path": "backend\\modules\\geo_module.py",
-      "accessCount": 5,
-      "lastAccessed": 1780751242392,
-      "type": "file"
-    },
-    {
-      "path": "backend\\modules\\rep_module.py",
-      "accessCount": 5,
-      "lastAccessed": 1780751242818,
-      "type": "file"
-    },
-    {
-      "path": "frontend\\app.js",
-      "accessCount": 4,
-      "lastAccessed": 1780750971164,
+      "accessCount": 1,
+      "lastAccessed": 1781280015242,
       "type": "file"
     },
     {
       "path": "backend\\models\\schemas.py",
-      "accessCount": 4,
-      "lastAccessed": 1780751236313,
-      "type": "file"
-    },
-    {
-      "path": "CLAUDE.md",
-      "accessCount": 4,
-      "lastAccessed": 1780766300097,
-      "type": "file"
-    },
-    {
-      "path": "main.py",
-      "accessCount": 3,
-      "lastAccessed": 1780678167697,
-      "type": "file"
-    },
-    {
-      "path": "requirements.txt",
-      "accessCount": 3,
-      "lastAccessed": 1780678167762,
-      "type": "file"
-    },
-    {
-      "path": "frontend\\index.html",
-      "accessCount": 3,
-      "lastAccessed": 1780750974449,
-      "type": "file"
-    },
-    {
-      "path": "pytest.ini",
-      "accessCount": 3,
-      "lastAccessed": 1780766369993,
-      "type": "file"
-    },
-    {
-      "path": "backend\\requirements.txt",
-      "accessCount": 2,
-      "lastAccessed": 1780678400478,
-      "type": "file"
-    },
-    {
-      "path": "test_ws.py",
-      "accessCount": 2,
-      "lastAccessed": 1780750344621,
-      "type": "file"
-    },
-    {
-      "path": "backend\\modules\\email_module.py",
-      "accessCount": 2,
-      "lastAccessed": 1780751244470,
-      "type": "file"
-    },
-    {
-      "path": "backend\\tests\\test_modules.py",
-      "accessCount": 2,
-      "lastAccessed": 1780766245438,
-      "type": "file"
-    },
-    {
-      "path": ".env.example",
       "accessCount": 1,
-      "lastAccessed": 1780678376506,
+      "lastAccessed": 1781280015786,
       "type": "file"
     },
     {
-      "path": "backend\\models\\__init__.py",
+      "path": "backend\\agent\\risk_engine.py",
       "accessCount": 1,
-      "lastAccessed": 1780678405647,
+      "lastAccessed": 1781280016217,
       "type": "file"
     },
     {
-      "path": "backend\\agent\\__init__.py",
+      "path": "backend\\intel\\schemas.py",
       "accessCount": 1,
-      "lastAccessed": 1780678406851,
+      "lastAccessed": 1781280187452,
       "type": "file"
     },
     {
-      "path": "backend\\modules\\__init__.py",
+      "path": "backend\\intel\\graph.py",
       "accessCount": 1,
-      "lastAccessed": 1780678409873,
+      "lastAccessed": 1781280215209,
       "type": "file"
     },
     {
-      "path": "frontend\\style.css",
+      "path": "backend\\intel\\cluster.py",
       "accessCount": 1,
-      "lastAccessed": 1780686196113,
+      "lastAccessed": 1781280281451,
       "type": "file"
     },
     {
-      "path": "test_email.py",
+      "path": "backend\\intel\\store.py",
       "accessCount": 1,
-      "lastAccessed": 1780750997417,
+      "lastAccessed": 1781280299608,
       "type": "file"
     },
     {
-      "path": "backend\\requirements-dev.txt",
+      "path": "backend\\intel\\adversary.py",
       "accessCount": 1,
-      "lastAccessed": 1780751589224,
+      "lastAccessed": 1781280364504,
       "type": "file"
     },
     {
-      "path": "backend\\tests\\__init__.py",
+      "path": "backend\\intel\\actor_match.py",
       "accessCount": 1,
-      "lastAccessed": 1780751592925,
+      "lastAccessed": 1781280391754,
       "type": "file"
     },
     {
-      "path": "backend\\tests\\conftest.py",
+      "path": "backend\\intel\\relations.py",
       "accessCount": 1,
-      "lastAccessed": 1780751594871,
+      "lastAccessed": 1781280405277,
       "type": "file"
     },
     {
-      "path": "backend\\tests\\test_schemas.py",
+      "path": "backend\\intel\\registry.py",
       "accessCount": 1,
-      "lastAccessed": 1780751615003,
+      "lastAccessed": 1781280462183,
       "type": "file"
     },
     {
-      "path": "backend\\tests\\test_risk_engine.py",
+      "path": "backend\\intel\\agent.py",
       "accessCount": 1,
-      "lastAccessed": 1780751624961,
+      "lastAccessed": 1781280503803,
       "type": "file"
     },
     {
-      "path": "backend\\tests\\test_orchestrator.py",
+      "path": "backend\\intel\\__init__.py",
       "accessCount": 1,
-      "lastAccessed": 1780753239213,
+      "lastAccessed": 1781280512430,
       "type": "file"
     },
     {
-      "path": "backend\\tests\\test_api.py",
+      "path": "backend\\tests\\test_intel_graph.py",
       "accessCount": 1,
-      "lastAccessed": 1780766126710,
+      "lastAccessed": 1781280618143,
       "type": "file"
     },
     {
-      "path": "README.md",
+      "path": "backend\\tests\\test_intel_bayes.py",
       "accessCount": 1,
-      "lastAccessed": 1780767162442,
+      "lastAccessed": 1781280633667,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_intel_cluster.py",
+      "accessCount": 1,
+      "lastAccessed": 1781280644806,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_intel_evolution.py",
+      "accessCount": 1,
+      "lastAccessed": 1781280657467,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_intel_adversary.py",
+      "accessCount": 1,
+      "lastAccessed": 1781280667653,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_intel_store.py",
+      "accessCount": 1,
+      "lastAccessed": 1781280675888,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_intel_agent.py",
+      "accessCount": 1,
+      "lastAccessed": 1781280692601,
+      "type": "file"
+    },
+    {
+      "path": "backend\\tests\\test_intel_api.py",
+      "accessCount": 1,
+      "lastAccessed": 1781289528887,
+      "type": "file"
+    },
+    {
+      "path": "docs\\ARCHITECTURE_V2.md",
+      "accessCount": 1,
+      "lastAccessed": 1781289668415,
       "type": "file"
     }
   ],

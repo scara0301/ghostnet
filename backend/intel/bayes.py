@@ -154,7 +154,8 @@ def observe_controls(module_results: list[dict]) -> dict[str, bool | None]:
             txt = " ".join(dns.get("TXT") or []).lower()
             obs["spf"] = "v=spf1" in txt
         if "DMARC" in dns:
-            dmarc = (dns.get("DMARC") or "").lower()
+            raw = dns.get("DMARC")            # dns module returns DMARC as a list
+            dmarc = (" ".join(raw) if isinstance(raw, list) else (raw or "")).lower()
             obs["dmarc"] = "v=dmarc1" in dmarc
             obs["dmarc_enforced"] = "p=quarantine" in dmarc or "p=reject" in dmarc
         for key, control in (("DKIM", "dkim"), ("DNSSEC", "dnssec"), ("CAA", "caa"),

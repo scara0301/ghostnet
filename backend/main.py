@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from backend.agent.orchestrator import run_pipeline
 from backend.intel.agent import run_analysis
 from backend.intel.registry import default_runner
+from backend.intel.store import SnapshotStore
 from backend.models.schemas import TargetRequest, WSEvent
 
 app = FastAPI(title="ghostnet")
@@ -78,8 +79,13 @@ async def analyst_endpoint(ws: WebSocket) -> None:
                                    data=result.get("data")))
                 return result
 
-            report = await run_analysis(req.target, req.target_type,
-                                        run_module=traced_runner, client=client)
+            store = SnapshotStore()              # persists to reports/ghostnet.db
+            try:
+                report = await run_analysis(req.target, req.target_type,
+                                            run_module=traced_runner, client=client,
+                                            store=store)
+            finally:
+                store.close()
 
         for decision in report.decisions:
             await send(WSEvent(tag="WARN" if decision.action == "request_collection" else "OK",

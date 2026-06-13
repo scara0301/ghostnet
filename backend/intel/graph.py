@@ -129,13 +129,22 @@ class DigitalTwin:
                     self.upsert_edge(ip, f"org:{org}", "owned_by", confidence=0.6)
 
         elif module == "whois":
+            # RDAP registrar arrives as a vcardArray (list); only use plain strings.
             registrar = data.get("registrar")
-            if registrar:
+            if isinstance(registrar, str) and registrar:
                 self.upsert_node(f"registrar:{registrar}", "org", registrar)
                 self.upsert_edge(root, f"registrar:{registrar}", "same_registrar")
+            expiry = data.get("expiry")
+            if expiry and root in self.nodes:
+                norm = expiry.replace("Z", "+00:00") if isinstance(expiry, str) else expiry
+                self.nodes[root].attrs["expiry"] = norm
 
         elif module == "rep":
-            for host in data.get("hosts", []) or []:
+            # Attach observed open ports to the scanned node for adversarial sim.
+            ports = data.get("open_ports") or []
+            if ports and root in self.nodes:
+                self.nodes[root].attrs["open_ports"] = ports
+            for host in data.get("hosts", []) or []:        # supports parsed hostsearch
                 self.upsert_node(host, "subdomain", host)
                 self.upsert_edge(host, root, "subdomain_of", confidence=0.7)
 

@@ -100,7 +100,15 @@ class DigitalTwin:
                 self.upsert_node(aaaa, "ip", aaaa)
                 self.upsert_edge(root, aaaa, "resolves_to")
             for mx in data.get("MX", []) or []:
-                host = mx.split()[-1].rstrip(".") if isinstance(mx, str) else str(mx)
+                if isinstance(mx, str):
+                    parts = mx.split()           # "10 mail.x.com." -> take the host
+                    if not parts:                # empty / whitespace-only MX value
+                        continue
+                    host = parts[-1].rstrip(".")
+                else:
+                    host = str(mx)
+                if not host:
+                    continue
                 self.upsert_node(host, "mx", host)
                 self.upsert_edge(host, root, "mx_for")
             for ns in data.get("NS", []) or []:
@@ -129,13 +137,22 @@ class DigitalTwin:
                     self.upsert_edge(ip, f"org:{org}", "owned_by", confidence=0.6)
 
         elif module == "whois":
+            # RDAP registrar arrives as a vcardArray (list); only use plain strings.
             registrar = data.get("registrar")
-            if registrar:
+            if isinstance(registrar, str) and registrar:
                 self.upsert_node(f"registrar:{registrar}", "org", registrar)
                 self.upsert_edge(root, f"registrar:{registrar}", "same_registrar")
+            expiry = data.get("expiry")
+            if expiry and root in self.nodes:
+                norm = expiry.replace("Z", "+00:00") if isinstance(expiry, str) else expiry
+                self.nodes[root].attrs["expiry"] = norm
 
         elif module == "rep":
-            for host in data.get("hosts", []) or []:
+            # Attach observed open ports to the scanned node for adversarial sim.
+            ports = data.get("open_ports") or []
+            if ports and root in self.nodes:
+                self.nodes[root].attrs["open_ports"] = ports
+            for host in data.get("hosts", []) or []:        # supports parsed hostsearch
                 self.upsert_node(host, "subdomain", host)
                 self.upsert_edge(host, root, "subdomain_of", confidence=0.7)
 

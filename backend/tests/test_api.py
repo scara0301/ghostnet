@@ -8,7 +8,9 @@ from __future__ import annotations
 
 import json
 
+import pytest
 from fastapi.testclient import TestClient
+from starlette.websockets import WebSocketDisconnect
 
 import backend.main as mainmod
 from backend.models.schemas import WSEvent
@@ -61,3 +63,27 @@ def test_websocket_malformed_json_emits_done():
 
     assert first["tag"] == "ERR"
     assert second["tag"] == "DONE"
+
+
+def test_websocket_rejects_cross_site_origin():
+    # Hardening: a browser always sends Origin on the WS handshake; a cross-site
+    # page must be refused (blocks cross-site WebSocket hijacking).
+    client = TestClient(mainmod.app)
+    with pytest.raises(WebSocketDisconnect):
+        with client.websocket_connect(
+            "/ws/recon", headers={"origin": "http://evil.example"}
+        ) as ws:
+            ws.receive_text()
+
+
+def test_websocket_allows_localhost_origin(monkeypatch):
+    async def fake_pipeline(target, target_type, send):
+        await send(WSEvent(tag="DONE", module="engine", data={}))
+
+    monkeypatch.setattr(mainmod, "run_pipeline", fake_pipeline)
+    client = TestClient(mainmod.app)
+    with client.websocket_connect(
+        "/ws/recon", headers={"origin": "http://localhost:8000"}
+    ) as ws:
+        ws.send_text(json.dumps({"target": "example.com", "target_type": "domain"}))
+        assert json.loads(ws.receive_text())["tag"] == "DONE"

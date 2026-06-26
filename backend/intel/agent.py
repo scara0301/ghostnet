@@ -27,12 +27,14 @@ from backend.intel import bayes
 from backend.intel.actor_match import match_actors
 from backend.intel.adversary import simulate_attack_paths
 from backend.intel.cluster import cluster_infrastructure
+from backend.intel.evolution import forecast_all
 from backend.intel.graph import DigitalTwin
 from backend.intel.registry import MODULE_COST, default_runner
 from backend.intel.relations import predict_hidden_edges
 from backend.intel.schemas import (
     AgentDecision, AnalystReport, Hypothesis, PostureEstimate,
 )
+from backend.intel.store import SnapshotStore
 
 RunModule = Callable[[str, str, object], Awaitable[dict]]
 
@@ -63,7 +65,8 @@ def _h_email_weak(by: dict, posture: PostureEstimate) -> tuple[float, list[str]]
         return 0.0, []
     llr, notes = 0.0, []
     txt = " ".join(dns.get("TXT", []) or []).lower()
-    dmarc = (dns.get("DMARC") or "").lower()
+    raw_dmarc = dns.get("DMARC")               # dns module returns DMARC as a list
+    dmarc = (" ".join(raw_dmarc) if isinstance(raw_dmarc, list) else (raw_dmarc or "")).lower()
     if "v=spf1" not in txt:
         llr += 1.2; notes.append("no SPF record")
     else:
@@ -128,12 +131,32 @@ def _h_exploitable(by: dict, posture: PostureEstimate) -> tuple[float, list[str]
     return llr, notes
 
 
+def _h_expiry_risk(by: dict, posture: PostureEstimate) -> tuple[float, list[str]]:
+    whois = by.get("whois")
+    if whois is None:
+        return 0.0, []
+    llr, notes = 0.0, []
+    days = whois.get("days_until_expiry")
+    if isinstance(days, (int, float)):
+        if days < 30:
+            llr += 2.2; notes.append(f"expires in {days}d")
+        elif days < 90:
+            llr += 0.6; notes.append(f"expires in {days}d")
+        else:
+            llr -= 1.0; notes.append(f"{days}d to expiry")
+    status = " ".join(whois.get("status") or []).lower()
+    if status and "prohibited" not in status:
+        llr += 0.8; notes.append("no registrar transfer/delete lock")
+    return llr, notes
+
+
 _HYPOTHESES = [
     ("H1", "Target has weak email security posture", 0.30, ["dns", "email"], _h_email_weak),
     ("H2", "Target exposes staging/dev infrastructure", 0.20, ["crt", "rep"], _h_staging),
     ("H3", "Target shares infrastructure across many assets", 0.25, ["crt", "geo"], _h_shared_infra),
     ("H4", "Target resembles malicious/phishing infrastructure", 0.10, ["otx", "geo"], _h_malicious),
     ("H5", "Target exposes externally exploitable services", 0.15, ["rep", "geo"], _h_exploitable),
+    ("H6", "Domain at risk of expiry/takeover", 0.15, ["whois"], _h_expiry_risk),
 ]
 
 
@@ -147,12 +170,16 @@ def _evaluate(spec, by, posture, ran: set[str], pipeline: set[str]) -> Hypothesi
     llr, notes = fn(by, posture)
     posterior = _sigmoid(_logit(prior) + llr)
     untested = [m for m in relevant if m in pipeline and m not in ran]
+    # Confirm early if the evidence is already strong; otherwise keep collecting
+    # while relevant evidence remains. Crucially, never *reject* a hypothesis that
+    # still has untested collection -- you cannot reject what you never checked
+    # (this is what stops a low-prior hypothesis from dying before its module runs).
     if posterior >= _CONFIRM:
         status = "confirmed"
-    elif posterior <= _REJECT:
-        status = "rejected"
     elif untested:
         status = "needs_evidence"
+    elif posterior <= _REJECT:
+        status = "rejected"
     else:
         status = "open"
     return Hypothesis(id=hid, statement=statement, prior=prior,
@@ -179,8 +206,10 @@ async def run_analysis(
     *,
     run_module: RunModule | None = None,
     client=None,
-    budget: float = 8.0,
+    budget: float = 10.0,
     min_voi: float = 0.05,
+    store: SnapshotStore | None = None,
+    horizon_days: int = 30,
 ) -> AnalystReport:
     run_module = run_module or default_runner
     pipeline = set(PIPELINE.get(target_type, []))
@@ -199,9 +228,12 @@ async def run_analysis(
 
     while spent < budget:
         candidates = [m for m in pipeline if m not in ran]
-        if not candidates:
+        # Only consider modules we can still afford; spend remaining budget on the
+        # best affordable option rather than stalling on an unaffordable favourite.
+        affordable = [m for m in candidates if spent + MODULE_COST.get(m, 1.0) <= budget]
+        if not affordable:
             break
-        scored = sorted(candidates, key=lambda m: _voi(m, hyps, specs), reverse=True)
+        scored = sorted(affordable, key=lambda m: _voi(m, hyps, specs), reverse=True)
         best = scored[0]
         best_voi = _voi(best, hyps, specs)
 
@@ -211,9 +243,6 @@ async def run_analysis(
                 step=step, action="stop", expected_value=round(best_voi, 4),
                 reason="marginal evidence value below threshold; conclusions stable",
             ))
-            break
-
-        if spent + MODULE_COST.get(best, 1.0) > budget:
             break
 
         step += 1
@@ -229,11 +258,28 @@ async def run_analysis(
         results.append(result)
         ran.add(best)
         spent += MODULE_COST.get(best, 1.0)
-        twin.ingest_module(target, result)
+        try:                                          # ingestion must never abort the loop
+            twin.ingest_module(target, result)
+        except Exception:
+            pass
         posture = current_posture()
         hyps = [_evaluate(s, _by_module(results), posture, ran, pipeline) for s in specs]
 
     posture = current_posture()
+    # Snapshot the *observed* twin now, before adversarial simulation upserts the
+    # synthetic INTERNET root into it -- otherwise that phantom node would leak
+    # into report.graph and desync from the persisted snapshot below.
+    graph_dict = twin.to_dict()
+
+    # Temporal intelligence: persist this snapshot, then forecast from history.
+    forecasts = []
+    if store is not None:
+        try:
+            findings_count = sum(len(r.get("findings", []) or []) for r in results)
+            store.save(target, twin, posture=posture.theta_mean, findings=findings_count)
+            forecasts = forecast_all(target, store.history(target), horizon_days)
+        except Exception:
+            forecasts = []
 
     # Unresolved-but-promising hypotheses with nothing left to run -> escalate.
     for h in hyps:
@@ -249,7 +295,8 @@ async def run_analysis(
     return AnalystReport(
         target=target, target_type=target_type, decisions=decisions, hypotheses=hyps,
         posture=posture, clusters=cluster_infrastructure(twin),
-        forecasts=[], attack_paths=simulate_attack_paths(twin),
+        forecasts=forecasts, attack_paths=simulate_attack_paths(twin),
         actor_matches=match_actors(twin), predicted_edges=predict_hidden_edges(twin),
+        graph=graph_dict,
         modules_run=sorted(ran), modules_skipped=sorted(pipeline - ran),
     )

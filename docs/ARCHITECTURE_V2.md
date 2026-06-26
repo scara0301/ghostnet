@@ -5,7 +5,7 @@
 
 This document is implementation-grade. Everything in **§A "Shipped"** is real,
 runnable, and covered by the offline test suite (`backend/tests/test_intel_*.py`,
-33 tests). Everything in **§B "Specified"** is a heavyweight model design with
+41 tests). Everything in **§B "Specified"** is a heavyweight model design with
 architecture, data, training, inference, and the exact code seam it drops into —
 deliberately not faked as "working" code.
 
@@ -394,7 +394,7 @@ promptable.
 | Digital Twin graph | `graph.py` | **shipped** | `test_intel_graph.py` |
 | Bayesian recon-gap (non-LLM) | `bayes.py` | **shipped** | `test_intel_bayes.py` |
 | Infra clustering | `cluster.py` | **shipped** | `test_intel_cluster.py` |
-| Threat evolution (closed-form) | `evolution.py` | **shipped** | `test_intel_evolution.py` |
+| Threat evolution (closed-form) | `evolution.py` | **shipped + wired into live scans via `store`** | `test_intel_evolution.py` |
 | Adversarial simulation | `adversary.py` | **shipped** | `test_intel_adversary.py` |
 | Actor matching | `actor_match.py` | **shipped** | (fingerprint exercised via agent) |
 | Hidden-edge prediction | `relations.py` | **shipped** | (exercised via agent) |
@@ -407,4 +407,4 @@ promptable.
 | HMM lifecycle | §B.4 | specified | — |
 | POMDP planner | §B.5 | specified | — |
 
-Full suite: **128 tests passing, fully offline** (`PYTHONPATH=. pytest`).
+Full suite: **136 tests passing, fully offline** (`PYTHONPATH=. pytest`).

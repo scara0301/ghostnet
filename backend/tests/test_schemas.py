@@ -10,10 +10,16 @@ from backend.models.schemas import Finding, ReconReport, TargetRequest, WSEvent
 
 
 class TestTargetRequest:
-    @pytest.mark.parametrize("ttype", ["domain", "ip", "email"])
-    def test_valid_target_types(self, ttype):
-        req = TargetRequest(target="example.com", target_type=ttype)
-        assert req.target_type == ttype
+    @pytest.mark.parametrize("target,ttype", [
+        ("example.com", "domain"),
+        ("scanme.nmap.org", "domain"),
+        ("8.8.8.8", "ip"),
+        ("2606:4700:4700::1111", "ip"),
+        ("admin@example.com", "email"),
+    ])
+    def test_valid_type_matched_targets(self, target, ttype):
+        req = TargetRequest(target=target, target_type=ttype)
+        assert req.target == target and req.target_type == ttype
 
     def test_invalid_target_type_rejected(self):
         with pytest.raises(ValidationError):
@@ -22,6 +28,42 @@ class TestTargetRequest:
     def test_target_required(self):
         with pytest.raises(ValidationError):
             TargetRequest(target_type="domain")
+
+    # --- hardening: target must match its declared type ---------------------
+    @pytest.mark.parametrize("target,ttype", [
+        ("example.com", "ip"),        # not an IP
+        ("example.com", "email"),     # not an email
+        ("8.8.8.8", "domain"),        # IP passed as domain
+        ("not an email", "email"),
+        ("nodothostname", "domain"),  # single label, no dot
+    ])
+    def test_type_mismatch_rejected(self, target, ttype):
+        with pytest.raises(ValidationError):
+            TargetRequest(target=target, target_type=ttype)
+
+    @pytest.mark.parametrize("ip", ["127.0.0.1", "10.0.0.1", "192.168.1.1",
+                                     "169.254.1.1", "::1", "0.0.0.0"])
+    def test_non_public_ip_rejected(self, ip):
+        # Blocks SSRF-into-internal-hosts and metadata endpoints.
+        with pytest.raises(ValidationError):
+            TargetRequest(target=ip, target_type="ip")
+
+    @pytest.mark.parametrize("target", [
+        "example.com/../admin",       # path-segment injection
+        "example.com?q=1",
+        "example.com#frag",
+        "evil.com\r\nHost: x",        # CRLF injection
+        "a b.com",                    # internal whitespace
+        "",                           # empty
+        "x" * 300,                    # over length cap
+    ])
+    def test_malicious_or_malformed_target_rejected(self, target):
+        with pytest.raises(ValidationError):
+            TargetRequest(target=target, target_type="domain")
+
+    def test_target_is_stripped(self):
+        req = TargetRequest(target="  example.com  ", target_type="domain")
+        assert req.target == "example.com"
 
 
 class TestFinding:

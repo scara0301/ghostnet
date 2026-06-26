@@ -29,6 +29,10 @@
         <button class="btn-scan" id="btn-scan">
           <i class="ti ti-radar"></i> Run Scan
         </button>
+        <button class="btn-scan btn-analyst" id="btn-analyst">
+          <i class="ti ti-brain"></i> Run Analyst
+        </button>
+        <p class="mode-hint">Recon = linear pipeline · Analyst = autonomous, hypothesis-driven</p>
       </div>
 
       <div class="modules-section">
@@ -97,6 +101,50 @@
         </div>
         <div id="findings-container"></div>
       </div>
+
+      <!-- Autonomous analyst intelligence product -->
+      <section class="analyst-panel" id="analyst-panel">
+        <div class="intel-summary" id="intel-summary"></div>
+
+        <div class="intel-card intel-graph-card">
+          <div class="card-head">
+            <i class="ti ti-affiliate"></i> Digital Twin
+            <span class="legend" id="graph-legend"></span>
+          </div>
+          <div class="graph-wrap"><canvas id="twin-canvas"></canvas></div>
+        </div>
+
+        <div class="intel-grid">
+          <div class="intel-card">
+            <div class="card-head"><i class="ti ti-bulb"></i> Hypothesis Ledger</div>
+            <div class="card-body" id="intel-hypotheses"></div>
+          </div>
+          <div class="intel-card">
+            <div class="card-head"><i class="ti ti-shield-half"></i> Posture &amp; Recon Gaps</div>
+            <div class="card-body" id="intel-posture"></div>
+          </div>
+          <div class="intel-card">
+            <div class="card-head"><i class="ti ti-route"></i> Attack Paths</div>
+            <div class="card-body" id="intel-attack"></div>
+          </div>
+          <div class="intel-card">
+            <div class="card-head"><i class="ti ti-chart-line"></i> Threat Forecasts</div>
+            <div class="card-body" id="intel-forecasts"></div>
+          </div>
+          <div class="intel-card">
+            <div class="card-head"><i class="ti ti-binary-tree"></i> Infrastructure Clusters</div>
+            <div class="card-body" id="intel-clusters"></div>
+          </div>
+          <div class="intel-card">
+            <div class="card-head"><i class="ti ti-user-search"></i> Threat-Actor Matches</div>
+            <div class="card-body" id="intel-actors"></div>
+          </div>
+          <div class="intel-card intel-card-wide">
+            <div class="card-head"><i class="ti ti-list-check"></i> Analyst Decision Trace</div>
+            <div class="card-body" id="intel-decisions"></div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 

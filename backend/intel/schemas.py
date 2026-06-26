@@ -169,6 +169,7 @@ class AnalystReport(BaseModel):
     attack_paths: list[AttackPath] = Field(default_factory=list)
     actor_matches: list[ActorMatch] = Field(default_factory=list)
     predicted_edges: list[Edge] = Field(default_factory=list)
+    graph: dict = Field(default_factory=dict)        # Digital Twin: {nodes, edges}
     modules_run: list[str] = Field(default_factory=list)
     modules_skipped: list[str] = Field(default_factory=list)
     timestamp: datetime = Field(default_factory=now)

@@ -89,6 +89,23 @@ async def test_agent_forecasts_empty_without_store():
     assert report.forecasts == []              # no store -> no temporal claims
 
 
+async def test_agent_report_carries_twin_graph():
+    report = await run_analysis("x.com", "domain", run_module=_fake_runner)
+    assert "nodes" in report.graph and "edges" in report.graph
+    ids = {n["id"] for n in report.graph["nodes"]}
+    assert "x.com" in ids                       # apex domain present for the frontend
+
+
+async def test_report_graph_excludes_synthetic_internet_node():
+    # Regression (M1): adversarial simulation upserts a synthetic INTERNET root
+    # into the twin; report.graph must be snapshotted BEFORE that, so the phantom
+    # node never leaks to the frontend or desyncs from the persisted snapshot.
+    report = await run_analysis("x.com", "domain", run_module=_fake_runner)
+    ids = {n["id"] for n in report.graph["nodes"]}
+    assert "internet:0.0.0.0/0" not in ids
+    assert report.attack_paths is not None      # sim still ran (just on its own copy)
+
+
 async def test_ip_target_pipeline_subset():
     report = await run_analysis("8.8.8.8", "ip", run_module=_fake_runner)
     assert set(report.modules_run) <= {"geo", "otx", "rep"}

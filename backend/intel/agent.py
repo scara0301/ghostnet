@@ -258,11 +258,18 @@ async def run_analysis(
         results.append(result)
         ran.add(best)
         spent += MODULE_COST.get(best, 1.0)
-        twin.ingest_module(target, result)
+        try:                                          # ingestion must never abort the loop
+            twin.ingest_module(target, result)
+        except Exception:
+            pass
         posture = current_posture()
         hyps = [_evaluate(s, _by_module(results), posture, ran, pipeline) for s in specs]
 
     posture = current_posture()
+    # Snapshot the *observed* twin now, before adversarial simulation upserts the
+    # synthetic INTERNET root into it -- otherwise that phantom node would leak
+    # into report.graph and desync from the persisted snapshot below.
+    graph_dict = twin.to_dict()
 
     # Temporal intelligence: persist this snapshot, then forecast from history.
     forecasts = []
@@ -290,5 +297,6 @@ async def run_analysis(
         posture=posture, clusters=cluster_infrastructure(twin),
         forecasts=forecasts, attack_paths=simulate_attack_paths(twin),
         actor_matches=match_actors(twin), predicted_edges=predict_hidden_edges(twin),
+        graph=graph_dict,
         modules_run=sorted(ran), modules_skipped=sorted(pipeline - ran),
     )

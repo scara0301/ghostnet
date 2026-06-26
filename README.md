@@ -1,4 +1,4 @@
-# 👻 GHOSTNET
+#  GHOSTNET
 
 **AI-augmented OSINT intelligence platform.** Point it at a domain, IP, or email and it autonomously runs a reconnaissance pipeline against free public APIs, streams findings to your browser in real time over WebSocket, and produces a structured, risk-scored threat report.
 

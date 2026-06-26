@@ -100,7 +100,15 @@ class DigitalTwin:
                 self.upsert_node(aaaa, "ip", aaaa)
                 self.upsert_edge(root, aaaa, "resolves_to")
             for mx in data.get("MX", []) or []:
-                host = mx.split()[-1].rstrip(".") if isinstance(mx, str) else str(mx)
+                if isinstance(mx, str):
+                    parts = mx.split()           # "10 mail.x.com." -> take the host
+                    if not parts:                # empty / whitespace-only MX value
+                        continue
+                    host = parts[-1].rstrip(".")
+                else:
+                    host = str(mx)
+                if not host:
+                    continue
                 self.upsert_node(host, "mx", host)
                 self.upsert_edge(host, root, "mx_for")
             for ns in data.get("NS", []) or []:

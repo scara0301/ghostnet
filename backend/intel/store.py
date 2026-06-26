@@ -59,11 +59,16 @@ class SnapshotStore:
         return int(cur.lastrowid)
 
     def history(self, target: str, limit: int = 50) -> list[dict]:
+        # Take the most-recent `limit` snapshots (DESC), then return them in
+        # ascending chronological order so latest() == newest and the evolution
+        # engine diffs adjacent-in-time snapshots. ORDER BY ts ASC would silently
+        # return the OLDEST N and drop recent history once a target exceeds limit.
         rows = self.conn.execute(
             "SELECT id, ts, graph, posture, findings FROM snapshots "
-            "WHERE target=? ORDER BY ts ASC LIMIT ?",
+            "WHERE target=? ORDER BY ts DESC, id DESC LIMIT ?",
             (target, limit),
         ).fetchall()
+        rows = list(reversed(rows))
         out = []
         for r in rows:
             out.append({

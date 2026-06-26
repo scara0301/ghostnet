@@ -35,3 +35,19 @@ def test_history_is_target_scoped():
     assert len(store.history("x.com")) == 1
     assert store.latest("z.com") is None
     store.close()
+
+
+def test_history_returns_most_recent_within_limit():
+    # Regression (M2): once a target exceeds `limit` snapshots, history() must
+    # return the NEWEST N in ascending order (not the oldest N), so forecasts
+    # diff recent history and latest() is the newest snapshot.
+    store = SnapshotStore(":memory:")
+    t0 = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    for i in range(60):
+        store.save("x.com", DigitalTwin(), findings=i, ts=t0 + timedelta(days=i))
+    h = store.history("x.com", limit=50)
+    assert len(h) == 50
+    assert h[0]["ts"] < h[-1]["ts"]                  # ascending chronological
+    assert h[0]["findings"] == 10 and h[-1]["findings"] == 59   # newest 50 retained
+    assert store.latest("x.com")["findings"] == 59
+    store.close()

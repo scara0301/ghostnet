@@ -59,3 +59,18 @@ def test_ip_target_root_is_ip_node():
                                             "org": "Google"}, "findings": []})
     assert twin.nodes["8.8.8.8"].type == "ip"
     assert any(n.type == "asn" for n in twin.nodes.values())
+
+
+def test_ingest_dns_tolerates_empty_or_whitespace_mx():
+    # Regression (H1): malformed/partial DoH answers can yield empty or
+    # whitespace-only MX values; ingestion must skip them, never raise, so one
+    # bad record can't abort the whole analyst run.
+    twin = DigitalTwin()
+    twin.ingest_module("example.com", {
+        "module": "dns",
+        "data": {"A": ["1.2.3.4"], "MX": ["", "   ", "10 mail.example.com."]},
+        "findings": [],
+    })
+    assert "mail.example.com" in twin.nodes                  # the valid MX survived
+    assert any(e.type == "mx_for" for e in twin.edges.values())
+    assert "" not in twin.nodes                              # empty value skipped
